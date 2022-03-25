@@ -102,13 +102,14 @@ while(1):
     try:
         durchlauf = durchlauf + 1
         print(durchlauf)
-        time.sleep(5)
+        time.sleep(60)
         if maxcellvoltage <= MaxVoltCell1:
             print("Höchste Zelle(" + str(maxcellvoltage) + "V) liegt unter dem Wert vom Stufe 1 (" + str(MaxVoltCell1) + "V), ")
             print("daher wird maximaler Strom von " + str(MaxAmpStufe1) + "A eingestellt")
             print("Außerdem wird Ladespannung nicht reduziert und auf " + str(VoltSpgvoll) + "V eingestellt")
             client.publish("W/" + cerboserial + MaxChargeVoltagePath, '{"value": ' + str(VoltSpgvoll) + ' }')
             client.publish("W/" + cerboserial + MaxChargeCurrentPath, '{"value": ' + str(MaxAmpStufe1) + ' }')
+            time.sleep(120)
         elif maxcellvoltage <= MaxVoltCell2:
             print("Höchste Zelle(" + str(maxcellvoltage) + "V)  liegt über dem Wert vom Stufe 1 (" +str(MaxVoltCell1) + "V), ")
             print("daher wird der Ladestrom von " + str(MaxAmpStufe2) + "A eingestellt")

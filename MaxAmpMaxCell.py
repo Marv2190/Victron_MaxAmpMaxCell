@@ -15,18 +15,19 @@ broker_address = "192.168.1.xxx"
 #  Einstellen der Limits (Über Maxvoltcell1 wird Stufe 2 eingesetzt, über 2 dann 3 usw.)
 
 MaxAmpStufe1 = 400
-MaxAmpStufe2 = 100
+MaxAmpStufe2 = 70
 MaxAmpStufe3 = 20
 MaxAmpStufe4 = 6
 MaxAmpStufe5 = 0
 
 VoltSpgvoll = 55
-VoltSpgred = 54.4
+VoltSpgred = 54.6
+VoltSpgvorAlarm = 54.2
 
 MaxVoltCell1 = 3.40
 MaxVoltCell2 = 3.42
 MaxVoltCell3 = 3.45
-MaxVoltCell4 = 3.5
+MaxVoltCell4 = 3.49
 
 # Pfade
 
@@ -113,8 +114,8 @@ while(1):
         elif maxcellvoltage <= MaxVoltCell2:
             print("Höchste Zelle(" + str(maxcellvoltage) + "V)  liegt über dem Wert vom Stufe 1 (" +str(MaxVoltCell1) + "V), ")
             print("daher wird der Ladestrom von " + str(MaxAmpStufe2) + "A eingestellt")
-            print("Außerdem wird Ladespannung reduziert und auf " + str(VoltSpgred) + "V eingestellt")
-            client.publish("W/" + cerboserial + MaxChargeVoltagePath, '{"value": ' + str(VoltSpgred) + ' }')
+            # print("Außerdem wird Ladespannung reduziert und auf " + str(VoltSpgred) + "V eingestellt")
+            # client.publish("W/" + cerboserial + MaxChargeVoltagePath, '{"value": ' + str(VoltSpgred) + ' }')
             client.publish("W/" + cerboserial + MaxChargeCurrentPath, '{"value": ' + str(MaxAmpStufe2) + ' }')
         elif maxcellvoltage <= MaxVoltCell3:
             print("Höchste Zelle(" + str(maxcellvoltage) + "V)  liegt über dem Wert vom Stufe 2 (" +str(MaxVoltCell2) + "V), ")
@@ -125,14 +126,14 @@ while(1):
         elif maxcellvoltage <= MaxVoltCell4:
             print("Höchste Zelle(" + str(maxcellvoltage) + "V)  liegt über dem Wert vom Stufe 3 (" +str(MaxVoltCell3) + "V), ")
             print("daher wird der Ladestrom von " + str(MaxAmpStufe4) + "A eingestellt")
-            print("Außerdem wird Ladespannung reduziert und auf " + str(VoltSpgred) + "V eingestellt")
-            client.publish("W/" + cerboserial + MaxChargeVoltagePath, '{"value": ' + str(VoltSpgred) + ' }')
+            # print("Außerdem wird Ladespannung reduziert und auf " + str(VoltSpgred) + "V eingestellt")
+            # client.publish("W/" + cerboserial + MaxChargeVoltagePath, '{"value": ' + str(VoltSpgred) + ' }')
             client.publish("W/" + cerboserial + MaxChargeCurrentPath, '{"value": ' + str(MaxAmpStufe4) + ' }')
         elif maxcellvoltage >= MaxVoltCell4:
             print("Höchste Zelle(" + str(maxcellvoltage) + "V)  liegt über dem Wert vom Stufe 4 (" +str(MaxVoltCell4) + "V), ")
             print("daher wird der Ladestrom von " + str(MaxAmpStufe5) + "A eingestellt")
-            print("Außerdem wird Ladespannung reduziert und auf " + str(VoltSpgred) + "V eingestellt")
-            client.publish("W/" + cerboserial + MaxChargeVoltagePath, '{"value": ' + str(VoltSpgred) + ' }')
+            print("Außerdem wird Ladespannung reduziert und auf " + str(VoltSpgvorAlarm) + "V eingestellt")
+            client.publish("W/" + cerboserial + MaxChargeVoltagePath, '{"value": ' + str(VoltSpgvorAlarm) + ' }')
             client.publish("W/" + cerboserial + MaxChargeCurrentPath, '{"value": ' + str(MaxAmpStufe5) + ' }')
 
     except Exception as e:
